@@ -12,15 +12,15 @@
     </button>
 
     <!-- Theme Style Toggle -->
-    <button
-      @click="toggleThemeStyle()"
+    <!-- <button
+     @click="toggleThemeStyle()"
       class="p-3 rounded-lg theme-transition"
       :class="themeStyleClasses"
       :title="themeStore.currentTheme === 'clean' ? 'Switch to Retro Theme' : 'Switch to Clean Theme'"
     >
       <ComputerDesktopIcon v-if="themeStore.currentTheme === 'clean'" class="w-5 h-5" />
       <FilmIcon v-else class="w-5 h-5" />
-    </button>
+    </button>  -->
   </div>
 </template>
 

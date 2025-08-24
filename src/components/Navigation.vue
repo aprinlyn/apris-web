@@ -2,12 +2,6 @@
   <nav class="fixed top-0 left-0 right-10 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
-        <!-- Logo -->
-        <div class="flex-shrink-0">
-          <router-link to="/" class="text-2xl font-bold">
-            <span :class="logoClasses">Aprias</span>
-          </router-link>
-        </div>
 
         <!-- Navigation Links -->
         <div class="hidden md:block">
@@ -23,6 +17,33 @@
             </router-link>
           </div>
         </div>
+
+
+        <div class="flex top-4 right-4 z-50 flex gap-2">
+          <!-- Dark/Light Mode Toggle -->
+          <button
+            @click="themeStore.toggleDarkMode()"
+            class="p-3 rounded-lg theme-transition"
+            :class="darkModeClasses"
+            :title="themeStore.isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+          >
+            <LightModeIcon v-if="themeStore.isDark" />
+            <DarkModeIcon v-else />
+          </button>
+
+          <!-- Theme Style Toggle -->
+          <!-- <button
+            @click="toggleThemeStyle()"
+            class="p-3 rounded-lg theme-transition"
+            :class="themeStyleClasses"
+            :title="themeStore.currentTheme === 'clean' ? 'Switch to Retro Theme' : 'Switch to Clean Theme'"
+          >
+            <ComputerDesktopIcon v-if="themeStore.currentTheme === 'clean'" class="w-5 h-5" />
+            <FilmIcon v-else class="w-5 h-5" />
+          </button> -->
+        </div>
+
+        
 
         <!-- Mobile menu button -->
         <div class="md:hidden">
@@ -61,6 +82,9 @@ import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useThemeStore } from '@/stores/theme'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import DarkModeIcon from './icons/DarkModeIcon.vue'
+import LightModeIcon from './icons/LightModeIcon.vue'
+import { SunIcon, MoonIcon, ComputerDesktopIcon, FilmIcon } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
 const themeStore = useThemeStore()
@@ -125,4 +149,28 @@ const mobileMenuButtonClasses = computed(() => {
     return 'text-clean-600 hover:bg-clean-100 dark:text-clean-400 dark:hover:bg-clean-900'
   }
 })
-</script> 
+
+const darkModeClasses = computed(() => {
+  const base = 'hover:scale-110'
+  
+  if (themeStore.currentTheme === 'retro') {
+    return `${base} bg-retro-500 text-white hover:bg-retro-600 dark:bg-retro-600 dark:hover:bg-retro-700`
+  } else {
+    return `${base} bg-clean-500 text-white hover:bg-clean-600 dark:bg-clean-600 dark:hover:bg-clean-700`
+  }
+})
+
+const themeStyleClasses = computed(() => {
+  const base = 'hover:scale-110'
+  
+  if (themeStore.currentTheme === 'retro') {
+    return `${base} bg-retro-400 text-white hover:bg-retro-500 dark:bg-retro-700 dark:hover:bg-retro-800`
+  } else {
+    return `${base} bg-clean-400 text-white hover:bg-clean-500 dark:bg-clean-700 dark:hover:bg-clean-800`
+  }
+})
+
+const toggleThemeStyle = () => {
+  themeStore.switchTheme(themeStore.currentTheme === 'clean' ? 'retro' : 'clean')
+}
+</script>

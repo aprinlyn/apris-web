@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import BlogView from '@/views/BlogView.vue'
+import BlogPost from '@/views/BlogPost.vue'
 import ProjectsView from '@/views/ProjectsView.vue'
 
 const router = createRouter({
@@ -17,6 +18,11 @@ const router = createRouter({
       component: BlogView
     },
     {
+      path: '/blog/:slug',
+      name: 'blog-post',
+      component: BlogPost
+    },
+    {
       path: '/projects',
       name: 'projects',
       component: ProjectsView
@@ -24,4 +30,4 @@ const router = createRouter({
   ]
 })
 
-export default router 
+export default router

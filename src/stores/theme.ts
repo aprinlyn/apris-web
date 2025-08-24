@@ -32,7 +32,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   // Switch theme
   const switchTheme = (theme: 'clean' | 'retro') => {
-    currentTheme.value = theme
+    currentTheme.value = 'retro'
   }
 
   // Watch for changes and save to localStorage

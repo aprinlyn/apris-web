@@ -8,22 +8,30 @@
       <section class="py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
           <!-- Profile Section -->
-          <div class="text-center mb-16">
-            <div class="mb-8">
-              <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 shadow-lg">
+          <div class="flex items-center mb-16 gap-8 md:flex-row flex-col">
+            <!-- Left: Profile Image -->
+            <div class="md:w-1/3">
+              <div class="w-48 h-48 mx-auto overflow-hidden rounded-full border-4 shadow-lg">
                 <img
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face"
                   alt="Profile"
                   class="w-full h-full object-cover"
                 />
               </div>
+            </div>
+            
+            <!-- Right: Content -->
+            <div class="md:w-2/3 text-center md:text-left">
               <h1 class="text-4xl font-bold mb-4">
-                <span :class="nameClasses">Apriliyanto</span>
+                <span :class="nameClasses">Apri Liyantoko</span>
               </h1>
               <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
-                Full Stack Developer & Creative Technologist
+                Software Engineer Enthusiast
               </p>
-              <div class="flex justify-center space-x-4">
+              <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                I'm a passionate software engineer with a focus on building innovative solutions.
+              </p>
+              <div class="flex space-x-4 justify-center md:justify-start">
                 <a href="#" class="btn-primary" :class="primaryButtonClasses">
                   Download CV
                 </a>
@@ -35,19 +43,14 @@
           </div>
 
           <!-- Content Sections -->
-          <div class="grid md:grid-cols-2 gap-8">
+          <div class="flex flex-col gap-8">
             <!-- Latest Blog Posts -->
             <div class="card" :class="cardClasses">
               <h2 class="text-2xl font-bold mb-6" :class="sectionTitleClasses">
                 Latest Blog Posts
               </h2>
               <div class="space-y-4">
-                <div
-                  v-for="post in latestPosts"
-                  :key="post.id"
-                  class="p-4 rounded-lg theme-transition hover:scale-105"
-                  :class="postCardClasses"
-                >
+                <div v-for="post in latestPosts" :key="post.id" class="p-4 rounded-lg theme-transition hover:scale-105" :class="postCardClasses">
                   <h3 class="font-semibold mb-2" :class="postTitleClasses">
                     {{ post.title }}
                   </h3>
@@ -59,7 +62,7 @@
                       {{ post.date }}
                     </span>
                     <router-link
-                      :to="`/blog/${post.id}`"
+                      :to="`/blog/${post.slug}`"
                       class="text-sm font-medium theme-transition"
                       :class="linkClasses"
                     >
@@ -68,7 +71,7 @@
                   </div>
                 </div>
               </div>
-              <div class="mt-6 text-center">
+              <div class="mt-6 text-left">
                 <router-link
                   to="/blog"
                   class="btn-secondary"
@@ -112,7 +115,7 @@
                       {{ project.year }}
                     </span>
                     <router-link
-                      :to="`/projects/${project.id}`"
+                      :to="`/projects/${project.slug}`"
                       class="text-sm font-medium theme-transition"
                       :class="linkClasses"
                     >
@@ -121,7 +124,7 @@
                   </div>
                 </div>
               </div>
-              <div class="mt-6 text-center">
+              <div class="mt-6 text-left">
                 <router-link
                   to="/projects"
                   class="btn-secondary"
@@ -148,46 +151,22 @@ const themeStore = useThemeStore()
 // Sample data
 const latestPosts = [
   {
+    slug: 'building-api-docs-with-swagger',
     id: 1,
-    title: 'Building Modern Web Applications with Vue 3',
-    excerpt: 'Learn how to create scalable and maintainable web applications using Vue 3 and Composition API.',
-    date: '2024-01-15'
-  },
-  {
-    id: 2,
-    title: 'The Future of Web Development',
-    excerpt: 'Exploring emerging trends and technologies that will shape the future of web development.',
-    date: '2024-01-10'
-  },
-  {
-    id: 3,
-    title: 'Optimizing Performance in React Applications',
-    excerpt: 'Best practices for improving performance and user experience in React applications.',
-    date: '2024-01-05'
+    title: 'Building Interactive API Docs with Swagger UI in Java Spring Boot',
+    excerpt: 'A step-by-step tutorial how to integrate API Docs using Swagger UI in Java Spring Boot.',
+    date: '2025-05-12'
   }
 ]
 
 const featuredProjects = [
   {
+    slug: 'my-very-first-personal-website',
     id: 1,
-    title: 'E-Commerce Platform',
-    description: 'A full-stack e-commerce platform built with Vue.js and Node.js',
-    technologies: ['Vue.js', 'Node.js', 'MongoDB'],
-    year: '2024'
-  },
-  {
-    id: 2,
-    title: 'Task Management App',
-    description: 'A collaborative task management application with real-time updates',
-    technologies: ['React', 'Firebase', 'TypeScript'],
-    year: '2023'
-  },
-  {
-    id: 3,
-    title: 'Portfolio Website',
-    description: 'A responsive portfolio website with dark mode and theme switching',
-    technologies: ['Vue.js', 'Tailwind CSS', 'TypeScript'],
-    year: '2024'
+    title: 'My Very First Personal Website',
+    description: 'A Website to show my personal projects and experiences.',
+    technologies: ['Vue.js', 'Tailwind CSS'],
+    year: '2025'
   }
 ]
 
@@ -279,4 +258,4 @@ const secondaryButtonClasses = computed(() => {
     return 'border-clean-500 text-clean-600 hover:bg-clean-500 hover:text-white dark:border-clean-400 dark:text-clean-400 dark:hover:bg-clean-400 dark:hover:text-white'
   }
 })
-</script> 
+</script>

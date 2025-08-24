@@ -1,6 +1,6 @@
 <template>
   <div id="app" :class="themeClasses">
-    <ThemeToggle />
+    <!-- <ThemeToggle /> -->
     <router-view />
   </div>
 </template>
