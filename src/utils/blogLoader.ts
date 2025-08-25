@@ -1,12 +1,10 @@
 import { marked } from 'marked';
 import matter from 'gray-matter';
 
-// Configure marked options
-marked.setOptions({
+// Configure marked options with supported options in v16.2.0
+marked.use({
   gfm: true,
-  breaks: true,
-  headerIds: true,
-  smartLists: true
+  breaks: true
 });
 
 export interface BlogPost {
@@ -31,10 +29,11 @@ export async function loadBlogPost(slug: string): Promise<BlogPost | null> {
       throw new Error(`Blog post not found: ${slug}`);
     }
     
-    const post = await modules[path]();
+    const post = await modules[path]() as { default: string };
     
     // Parse front matter and markdown content
-    const { data, content } = matter(post.default || post);
+    const postContent = post.default;
+    const { data, content } = matter(postContent);
     
     // Validate required frontmatter data
     if (!data.id || !data.title || !data.slug) {
@@ -42,7 +41,7 @@ export async function loadBlogPost(slug: string): Promise<BlogPost | null> {
     }
     
     // Convert markdown to HTML
-    const htmlContent = marked(content);
+    const htmlContent = marked.parse(content, { async: false });
     
     return {
       id: data.id,
@@ -69,8 +68,9 @@ export async function loadAllBlogPosts(): Promise<BlogPost[]> {
   
   for (const path in blogFiles) {
     try {
-      const post = await blogFiles[path]();
-      const { data, content } = matter(post.default || post);
+      const post = await blogFiles[path]() as { default: string };
+      const postContent = post.default;
+      const { data, content } = matter(postContent);
       
       // Skip posts without required frontmatter
       if (!data.id || !data.title || !data.slug) {
@@ -78,7 +78,7 @@ export async function loadAllBlogPosts(): Promise<BlogPost[]> {
         continue;
       }
       
-      const htmlContent = marked(content);
+      const htmlContent = marked.parse(content, { async: false });
       
       posts.push({
         id: data.id,
